@@ -9,35 +9,58 @@ public class PlayerCtl : CharacterCtl
     [SerializeField] private GameObject brickPrefab;
 
     private Stack<GameObject> stackBricks = new Stack<GameObject>();
-    private List<GameObject> ListStairs = new List<GameObject>();
 
+    public Dictionary<Collider, GameObject> Dict;
 
     private CharacterController controller;
 
-    [SerializeField] private Material CurrentMateral;
+    [SerializeField] private SkinnedMeshRenderer sMeshRenderer;
 
     private Vector3 moveDirection;
     private Vector3 currentPosBrick;
+
+    [SerializeField] private Transform posRaycastCheckStair;
 
 
     public float speed = 6.0f;
     public float gravity = 20.0f;
     public float rotationSpeed = 700.0f;
 
+    private float horizontal;
+    private float vertical;
 
-    void Start()
+    public void OnInit()
     {
+    }
+
+
+    private void Start()
+    {
+        brickPrefab.GetComponent<Brick>().eColor = this.eColor;
+        OnInit();
         controller = GetComponent<CharacterController>();
         currentPosBrick = new Vector3(0,1.2f,-.6f);
     }
 
-    void Update()
+    public void SetColor(EColor eColor)
+    {
+        this.eColor = eColor;
+        sMeshRenderer.material.color = LevelManager.Instance.dataColor.GetColor(eColor);
+    }
+
+    private void Update()
+    {
+        Move();
+        CheckStair();
+    }
+
+    private void Move()
     {
         if (controller.isGrounded)
         {
             // Lấy đầu vào từ joystick hoặc bàn phím
-            float horizontal = joystick.Horizontal;
-            float vertical = joystick.Vertical;
+            horizontal = joystick.Horizontal;
+            vertical = joystick.Vertical;
 
             // Di chuyển trên mặt đất
             moveDirection = new Vector3(horizontal * speed, 0, vertical * speed);
@@ -54,6 +77,11 @@ public class PlayerCtl : CharacterCtl
             {
                 ChangeAnim("Idle");
             }
+            if (vertical < 0)
+            {
+                this.speed = 10f;
+            }
+
 
         }
 
@@ -64,34 +92,80 @@ public class PlayerCtl : CharacterCtl
         controller.Move(moveDirection * Time.deltaTime);
     }
 
-    
-
-    void OnControllerColliderHit(ControllerColliderHit hit)
+    private void CheckStair()
     {
-        if (hit.collider.CompareTag("Brick"))
+        // raycast
+        Vector3 posRaycast = posRaycastCheckStair.position;
+
+        // Tạo raycast từ vị trí của player xuống dưới theo trục y
+        RaycastHit hit;
+        if (Physics.Raycast(posRaycast, Vector3.up, out hit,5f))
         {
-            Brick brick = hit.collider.GetComponent<Brick>();
+            Stair stair = Cache.GetStair(hit.collider);
+            if (stair != null)
+            {
+                // có gạnh trên người
+                if (stackBricks.Count > 0)
+                {
+                    // gạch không màu hoặc màu khác player
+                    if (stair.EColor == EColor.None || stair.EColor != this.eColor && vertical > 0)
+                    {
+                        stair.ActiveMeshRenderer(this.eColor);
+                        RemoveBrick();
+                    }
+                }
+                // không có gạnh trên người 
+                if (stackBricks.Count <= 0)
+                {
+                    if ((stair.EColor == EColor.None || stair.EColor != this.eColor) && vertical > 0)
+                    {
+                        speed = 0;
+                    }
+                    else if ((stair.EColor == EColor.None || stair.EColor != this.eColor) && vertical <= 0)
+                    {
+                        speed = 10f; 
+                    }
+                }
+            }
+        }
+        // Vẽ raycast trong Scene view để dễ hình dung
+        Debug.DrawRay(posRaycast, Vector3.up * 5f, Color.red);
+    }
 
-            brick.DestroyBrick();
 
-            AddBrick();
-
-        }else if (hit.collider.CompareTag("Stair"))
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Debug.Log(hit.gameObject.name);
+        Door door = Cache.GetDoor(hit.collider);
+        if (door != null)
         {
-            Stair stair = hit.collider.GetComponent<Stair>();
-            stair.ActiveMeshRenderer(CurrentMateral);
-            //RemoveBrick();
-
+            if (vertical > 0)
+            {
+                door.DeactiveDoor();
+            }
         }
     }
 
-    private void AddBrick()
+    private void OnTriggerEnter(Collider other)
+    {
+        
+
+        Brick brick = Cache.GetBrick(other);
+        if (brick != null && brick.eColor == this.eColor)
+        {
+            brick.DeactiveBrick();
+            AddBrick();
+        }
+    }
+
+
+    public void AddBrick()
     {
         GameObject SpawnBrick = Instantiate(brickPrefab, transform);
         currentPosBrick.y += .3f;
         SpawnBrick.transform.localPosition = currentPosBrick;
         stackBricks.Push(SpawnBrick);
-        Debug.Log(stackBricks.Count);
+        //Debug.Log(stackBricks.Count);
     }
     private void RemoveBrick()
     {

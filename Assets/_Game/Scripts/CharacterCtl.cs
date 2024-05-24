@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class CharacterCtl : MonoBehaviour
 {
+    public EColor eColor;
+
     protected string currentAnimName;
+
     [SerializeField] private Animator anim;
 
     protected void ChangeAnim(string animName)
