@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class Stair : MonoBehaviour
 {
+    [SerializeField] private MeshRenderer meshRenderer;
+
     private EColor eColor;
-    private MeshRenderer meshRenderer;
 
     public EColor EColor { get => eColor;}
 
     private void Awake()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
         eColor = EColor.None;
     }
-    public void ActiveMeshRenderer(EColor eColor)
+
+    public void SetColor(EColor eColor)
     {
-        meshRenderer.enabled = true;
-        meshRenderer.material.color = LevelManager.Instance.dataColor.GetColor(eColor);
         this.eColor = eColor;
+        meshRenderer.enabled = true;
+        meshRenderer.material = LevelManager.Instance.dataColor.GetColor(eColor);
+        
     }
 }

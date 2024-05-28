@@ -5,11 +5,16 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     [SerializeField] private BoxCollider boxCollider;
-
-    public void DeactiveDoor()
+    [SerializeField] private MeshRenderer colonm1;
+    [SerializeField] private MeshRenderer colonm2;
+    public Platform platform;
+    public void DeactiveDoor(EColor eColor)
     {
         boxCollider.isTrigger = true;
         StartCoroutine(DisappearAndReappear());
+        platform.ActiveColors(eColor);
+        colonm1.material = LevelManager.Instance.dataColor.GetColor(eColor);
+        colonm2.material = LevelManager.Instance.dataColor.GetColor(eColor);
 
     }
 

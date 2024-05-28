@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DataColor", menuName = "ScriptableObjects/DataColor", order = 1)]
 public class DataColor : ScriptableObject
 {
-    public List<Color> colors;
+    public List<Material> colors;
 
-    public Color GetColor(EColor color)
+    public Material GetColor(EColor color)
     {
         return colors[((int)color)];
     }

@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
     public PlayerCtl playerCtl;
     public DataColor dataColor;
     public List<EColor> colors = new List<EColor>();
+    public List<Level> levels = new List<Level>();
 
     public static LevelManager Instance { get; private set; }
 
@@ -29,5 +30,11 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         playerCtl.SetColor(colors[0]);
+        playerCtl.TF.position = levels[0].StartPoint[0].position;
+
+        levels[0].SpawnBot(colors);
+
+        // sinh gạnh
+
     }
 }

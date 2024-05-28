@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class Cache
 {
-    private static Dictionary<Collider, Character> characters = new Dictionary<Collider, Character>();
+    private static Dictionary<Collider, CharacterCtl> characters = new Dictionary<Collider, CharacterCtl>();
 
-    public static Character GetCharacter(Collider collider)
+    public static CharacterCtl GetCharacter(Collider collider)
     {
         if (!characters.ContainsKey(collider))
         {
-            characters.Add(collider, collider.GetComponent<Character>());
+            characters.Add(collider, collider.GetComponent<CharacterCtl>());
         }
 
         return characters[collider];
@@ -51,5 +51,17 @@ public class Cache
         }
 
         return doors[collider];
+    }
+
+    private static Dictionary<Collider, DoorFinish> doorFinishs = new Dictionary<Collider, DoorFinish>();
+
+    public static DoorFinish GetDoorFinishs(Collider collider)
+    {
+        if (!doorFinishs.ContainsKey(collider))
+        {
+            doorFinishs.Add(collider, collider.GetComponent<DoorFinish>());
+        }
+
+        return doorFinishs[collider];
     }
 }

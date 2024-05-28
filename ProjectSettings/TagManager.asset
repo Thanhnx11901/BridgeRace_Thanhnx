@@ -8,16 +8,18 @@ TagManager:
   - Brick
   - Stair
   - Door
+  - DoorFinish
+  - FinishColonm
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Bot
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Player
+  - Bridge
+  - Plane
   - 
   - 
   - 

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: DataColor
   m_EditorClassIdentifier: 
   colors:
-  - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 0, g: 1, b: 0.120423555, a: 0}
-  - {r: 0, g: 0.038576603, b: 1, a: 0}
-  - {r: 1, g: 0.88149357, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0.9848051, a: 1}
+  - {fileID: 2100000, guid: a06eccf44aadf439caf505ad3a2998db, type: 2}
+  - {fileID: 2100000, guid: f2143850e988f4ac8a20bad0fec30db0, type: 2}
+  - {fileID: 2100000, guid: e99aecf2b66ce419681f24647ee8d3f8, type: 2}
+  - {fileID: 2100000, guid: 03443ffb84ce143c5bf6d2766b8d9134, type: 2}
+  - {fileID: 2100000, guid: b1dc85345e14d4abe9ae54fba28262e1, type: 2}
+  - {fileID: 2100000, guid: 683ea339ee04a4c0b8c304fdde64d1a4, type: 2}
+  - {fileID: 2100000, guid: 1c327a8f6440649c88c006844e6fede0, type: 2}

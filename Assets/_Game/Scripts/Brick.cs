@@ -4,28 +4,39 @@ using UnityEngine;
 
 public class Brick : GameUnit
 {
-    private MeshRenderer meshRenderer;
-    private BoxCollider boxCollider;
+    [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private BoxCollider boxCollider;
 
-    public EColor eColor;
+    private EColor eColor;
 
-    private void Awake()
+    public EColor EColor { get => eColor; }
+
+    public void SetColor(EColor eColor)
     {
-        meshRenderer = GetComponent<MeshRenderer>();
-        boxCollider = GetComponent<BoxCollider>();
+        this.eColor = eColor;
+        meshRenderer.material = LevelManager.Instance.dataColor.GetColor(eColor);
+
+    }
+    public void isActiveBrick(bool isActive)
+    {
+        meshRenderer.enabled = isActive;
+        boxCollider.enabled = isActive;
     }
 
-    private void Start()
-    {
-        meshRenderer.material.color = LevelManager.Instance.dataColor.GetColor(eColor);
-    }
     public void DeactiveBrick()
     {
         meshRenderer.enabled = false;
         boxCollider.enabled = false;
-
         StartCoroutine(DisappearAndReappear());
 
+    }
+    public bool isActiveBrick()
+    {
+        if(meshRenderer.enabled == true && boxCollider.enabled == true)
+        {
+            return true;
+        }
+        return false;
     }
 
     IEnumerator DisappearAndReappear()

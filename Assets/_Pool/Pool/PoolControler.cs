@@ -145,6 +145,8 @@ public enum PoolType
 {
     None,
     Brick,
+    BrickAdd,
+    Bot,
     Bullet_1,
     Bullet_2,
     Bullet_3,
