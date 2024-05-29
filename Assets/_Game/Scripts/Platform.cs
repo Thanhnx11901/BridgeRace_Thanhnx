@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Platform: MonoBehaviour
 {
-    [SerializeField] protected Transform PointSpawnBrick;
+    [SerializeField] private Transform PointSpawnBrick;
 
     private List<EColor> distributedColors = new List<EColor>();
 
@@ -66,7 +66,6 @@ public class Platform: MonoBehaviour
 
         // Xáo trộn danh sách màu sắc
         Shuffle(distributedColors);
-
         return distributedColors;
     }
 

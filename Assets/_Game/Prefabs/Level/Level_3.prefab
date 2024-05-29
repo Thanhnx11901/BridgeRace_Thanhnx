@@ -61,6 +61,11 @@ MonoBehaviour:
   - {fileID: 7729378710692808214}
   - {fileID: 3058635873745107000}
   - {fileID: 4796235464907166182}
+  pointNavMeshs:
+  - {fileID: 1641425257034100580}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &6259158715573505479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,7 +94,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 2b7521d712e2145fd862edc14093b96f, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 60b9e43ed6d1c4525a77060a4f603488, type: 2}
 --- !u!1001 &1885304076808695340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -98,6 +103,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9192126228266308664}
     m_Modifications:
+    - target: {fileID: 3719801863268346302, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4214210862293540874, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
       propertyPath: m_Name
       value: Platform_2
@@ -142,6 +151,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6477832928994964753, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -173,7 +186,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4214210862293540874, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
       propertyPath: m_Name
-      value: Platform1
+      value: Platform_1
       objectReference: {fileID: 0}
     - target: {fileID: 4810598172370012377, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
       propertyPath: m_LocalPosition.x
@@ -231,6 +244,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efcd4f81cb0f24e0dbba8f18d6b9b07c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1641425257034100580 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3804038467525813689, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
+  m_PrefabInstance: {fileID: 2453664960125012701}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6975942555050508804 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4810598172370012377, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
@@ -288,10 +306,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlatformWin
       objectReference: {fileID: 0}
-    - target: {fileID: 6995072527114491203, guid: 5fd6646ab152f422481eec642801be7e, type: 3}
-      propertyPath: m_TagString
-      value: DoorFinish
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -315,6 +329,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9192126228266308664}
     m_Modifications:
+    - target: {fileID: 3719801863268346302, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4214210862293540874, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
       propertyPath: m_Name
       value: Platform_3
@@ -357,6 +375,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4810598172370012377, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6477832928994964753, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

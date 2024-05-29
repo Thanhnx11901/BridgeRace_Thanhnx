@@ -36,15 +36,8 @@ public class LevelManager : MonoBehaviour
         // random màu sắc cho player và sinh bot
         playerCtl.SetColor(colors[0]);
 
-        //currentLevel = Instantiate(levels[0], transform);
-
+        LoadLevel(0);
         SpawnBot(colors);
-
-        playerCtl.TF.position = currentLevel.GetRandomStartPoint().position;
-        for (int i = 0; i < botCtls.Count; i++)
-        {
-            botCtls[i].TF.position = currentLevel.GetRandomStartPoint().position;
-        }
 
 
         // sinh level
@@ -55,19 +48,27 @@ public class LevelManager : MonoBehaviour
     {
         if (currentLevel != null) Destroy(currentLevel.gameObject);
 
-        
+        currentLevel = Instantiate(levels[indexLevel], transform);
 
         //set vị trí cho player và bot
-        
+        playerCtl.TF.position = currentLevel.GetRandomStartPoint().position;
+
+        for (int i = 0; i < botCtls.Count; i++)
+        {
+            botCtls[i].TF.position = currentLevel.GetRandomStartPoint().position;
+        }
     }
 
+    
     public void SpawnBot(List<EColor> eColors)
     {
         for (int i = 1; i < 4; i++)
         {
             BotCtl botCtl = SimplePool.Spawn<BotCtl>(PoolType.Bot, transform);
+            botCtl.agent.enabled = true;
             botCtl.SetColor(eColors[i]);
             botCtls.Add(botCtl);
+            
         }
     }
 }

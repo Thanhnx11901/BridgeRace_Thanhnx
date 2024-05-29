@@ -1072,8 +1072,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxCollider: {fileID: 3050227355304229051}
-  colonm1: {fileID: 7016714476485463018}
-  colonm2: {fileID: 6318435334550131008}
+  colonm1: {fileID: 2604423680246135077}
+  colonm2: {fileID: 8945501598971542713}
   platform: {fileID: 0}
 --- !u!1 &7727780394290514013
 GameObject:

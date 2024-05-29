@@ -12,10 +12,13 @@ public class ReachDestinationState : IState<BotCtl>
 
     public void OnExecute(BotCtl t)
     {
-        t.Move(LevelManager.Instance.currentLevel.finishPoint.position);
+        Vector3 pointNavMesh = LevelManager.Instance.currentLevel.finishPoint.position;
+        t.Move(pointNavMesh);
         t.CheckStair();
         if (t.stackBricks.Count <= 0)
         {
+            t.agent.velocity = Vector3.zero;
+
             t.ChangeState(new IdleState());
         }
     }

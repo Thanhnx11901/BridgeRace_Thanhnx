@@ -10,6 +10,9 @@ public class Level : MonoBehaviour
 
     public List<Transform> StartPoint;
 
+    public List<Transform> pointNavMeshs;
+
+
     private void Start()
     {
         SpawnBrickPlatform();

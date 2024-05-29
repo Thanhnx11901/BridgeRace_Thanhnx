@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,23 +8,25 @@ using UnityEngine.AI;
 
 public class BotCtl : CharacterCtl
 {
+    [SerializeField] private Transform posRaycastCheckStair;
+
     public NavMeshAgent agent;
     public Platform  currentPlatform;
     public Brick targetBrick;
-    [SerializeField] private Transform posRaycastCheckStair;
 
     protected IState<BotCtl> currentState;
 
-    public void Onit()
+    public void OnInit()
     {
-        //agent.velocity = agent.velocity.normalized;
+        agent.velocity = agent.velocity.normalized;
+        currentPlatform = LevelManager.Instance.currentLevel.platforms[0];
         ClearBrick();
     }
 
     private void Start()
     {
+        OnInit();
         ChangeState(new IdleState());
-        currentPlatform = LevelManager.Instance.currentLevel.platforms[0];
     }
     private void Update()
     {
@@ -52,14 +55,12 @@ public class BotCtl : CharacterCtl
     }
     public void Move(Vector3 pos)
     {
-        Debug.Log("move"+ eColor);
         agent.SetDestination(pos);
         ChangeAnim("Running");
     }
 
     public void CheckStair()
     {
-        Debug.Log("check stair" + eColor);
         // raycast
         Vector3 posRaycast = posRaycastCheckStair.position;
 
@@ -88,17 +89,18 @@ public class BotCtl : CharacterCtl
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Door"))
+        Door door = Cache.GetDoor(collision.collider);
+        if(door != null)
         {
-            Door door = collision.gameObject.GetComponent<Door>();
             door.DeactiveDoor(this.eColor);
             currentPlatform = door.platform;
             Debug.Log("Door");
         }
 
-        if (collision.gameObject.CompareTag("DoorFinish"))
+        DoorFinish doorFinish = Cache.GetDoorFinishs(collision.collider);
+        if (doorFinish != null)
         {
-            ChangeState(new IdleState());
+            doorFinish.DeactiveDoor();
         }
     }
 
@@ -116,8 +118,7 @@ public class BotCtl : CharacterCtl
 
     public void FindBrick()
     {
-        Debug.Log("find" + eColor);
-        //agent.velocity = agent.velocity.normalized;
+        agent.velocity = agent.velocity.normalized;
 
         List<Brick> bricks = currentPlatform.GetBricksByColor(eColor);
 

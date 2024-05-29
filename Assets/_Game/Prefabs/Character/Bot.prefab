@@ -116,10 +116,10 @@ MonoBehaviour:
   eColor: 0
   anim: {fileID: 5824011622177766640}
   sMeshRenderer: {fileID: 6992891226220304755}
+  posRaycastCheckStair: {fileID: 1882245648541877056}
   agent: {fileID: 8836836375436468614}
   currentPlatform: {fileID: 0}
   targetBrick: {fileID: 0}
-  posRaycastCheckStair: {fileID: 1882245648541877056}
 --- !u!195 &8836836375436468614
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -127,10 +127,10 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1182747922863924936}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.34
-  m_Speed: 4
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
