@@ -23,7 +23,7 @@ public class Platform: MonoBehaviour
                 // Gán màu sắc từ danh sách đã phân phối và xáo trộn
                 brickSpawn.SetColor(distributedColors[colorIndex++]);
                 brickSpawn.isActiveBrick(isAcitve);
-                brickSpawn.TF.localPosition = new Vector3(PointSpawnBrick.position.x + x, PointSpawnBrick.position.y, PointSpawnBrick.position.z + z);
+                brickSpawn.TF.position = new Vector3(PointSpawnBrick.position.x + x, PointSpawnBrick.position.y, PointSpawnBrick.position.z + z);
                 brickSpawn.TF.localScale = new Vector3(.3f, .3f, .6f);
 
                 bricks.Add(brickSpawn);
@@ -87,7 +87,6 @@ public class Platform: MonoBehaviour
     {
         return bricks[index].TF.position;
     }
-
 
     public List<Brick> GetBricksByColor(EColor eColor)
     {

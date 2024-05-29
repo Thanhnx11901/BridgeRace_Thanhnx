@@ -12,20 +12,18 @@ public class BotCtl : CharacterCtl
     public Brick targetBrick;
     [SerializeField] private Transform posRaycastCheckStair;
 
-
-
     protected IState<BotCtl> currentState;
 
     public void Onit()
     {
-        agent.velocity = agent.velocity.normalized;
+        //agent.velocity = agent.velocity.normalized;
         ClearBrick();
     }
 
     private void Start()
     {
         ChangeState(new IdleState());
-        currentPlatform = LevelManager.Instance.levels[0].platforms[0];
+        currentPlatform = LevelManager.Instance.currentLevel.platforms[0];
     }
     private void Update()
     {
@@ -54,12 +52,14 @@ public class BotCtl : CharacterCtl
     }
     public void Move(Vector3 pos)
     {
+        Debug.Log("move"+ eColor);
         agent.SetDestination(pos);
         ChangeAnim("Running");
     }
 
     public void CheckStair()
     {
+        Debug.Log("check stair" + eColor);
         // raycast
         Vector3 posRaycast = posRaycastCheckStair.position;
 
@@ -95,6 +95,11 @@ public class BotCtl : CharacterCtl
             currentPlatform = door.platform;
             Debug.Log("Door");
         }
+
+        if (collision.gameObject.CompareTag("DoorFinish"))
+        {
+            ChangeState(new IdleState());
+        }
     }
 
 
@@ -111,7 +116,8 @@ public class BotCtl : CharacterCtl
 
     public void FindBrick()
     {
-        agent.velocity = agent.velocity.normalized;
+        Debug.Log("find" + eColor);
+        //agent.velocity = agent.velocity.normalized;
 
         List<Brick> bricks = currentPlatform.GetBricksByColor(eColor);
 

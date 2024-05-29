@@ -4,6 +4,16 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum GameState
+{
+    MainMenu,
+    Playing,
+    Paused,
+    Win,
+    Lose
+}
+
+
 public class GameManager : Singleton<GameManager>
 {
     //[SerializeField] UserData userData;

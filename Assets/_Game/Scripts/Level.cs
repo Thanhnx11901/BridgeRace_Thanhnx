@@ -8,24 +8,34 @@ public class Level : MonoBehaviour
 
     public Transform finishPoint;
 
-    public Transform[] StartPoint;
+    public List<Transform> StartPoint;
 
     private void Start()
     {
-       
+        SpawnBrickPlatform();
     }
 
-    public void SpawnBot(List<EColor> eColors)
+    //sinh gạnh trên platform
+    private void SpawnBrickPlatform()
     {
-        for (int i = 1; i < 2; i++)
-        {
-            BotCtl botCtl = SimplePool.Spawn<BotCtl>(PoolType.Bot, transform);
-            botCtl.TF.position = StartPoint[i].position;
-            botCtl.SetColor(eColors[i]);
-            botCtl.eColor = eColors[i];
-        }
         platforms[0].SpawnBricks(true);
-        platforms[1].SpawnBricks(false);
-        platforms[2].SpawnBricks(false);
+        for (int i = 1; i < platforms.Count; i++)
+        {
+            platforms[i].SpawnBricks(false);
+        }
+    }
+
+    //lấy ra vị trí bắt đầu ngẫu nhiên
+    public Transform GetRandomStartPoint()
+    {
+
+        // Lấy vị trí ngẫu nhiên từ danh sách
+        int randomIndex = Random.Range(0, StartPoint.Count);
+        Transform randomPoint = StartPoint[randomIndex];
+
+        // Loại bỏ phần tử đã lấy ra khỏi danh sách
+        StartPoint.RemoveAt(randomIndex);
+
+        return randomPoint;
     }
 }
