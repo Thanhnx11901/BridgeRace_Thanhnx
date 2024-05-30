@@ -12,4 +12,14 @@ public class Win : UICanvas
         UIManager.Ins.OpenUI<MianMenu>();
         Close(0);
     }
+
+    public void NextLevelButton()
+    {
+        LevelManager.Instance.NextLevel();
+
+        GameManager.ChangeState(GameState.Playing);
+
+        UIManager.Ins.OpenUI<GamePlay>();
+        Close(0);
+    }
 }

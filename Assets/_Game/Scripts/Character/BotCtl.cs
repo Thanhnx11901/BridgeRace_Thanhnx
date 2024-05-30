@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SocialPlatforms;
 
 
 public class BotCtl : CharacterCtl
@@ -11,16 +12,36 @@ public class BotCtl : CharacterCtl
     [SerializeField] private Transform posRaycastCheckStair;
 
     public NavMeshAgent agent;
-    public Platform  currentPlatform;
+    public Platform currentPlatform;
     public Brick targetBrick;
+
+    private bool isMove;
 
     protected IState<BotCtl> currentState;
 
     public void OnInit()
     {
+        isMove = true;
+
+        agent.enabled = true;
+
         agent.velocity = agent.velocity.normalized;
-        currentPlatform = LevelManager.Instance.currentLevel.platforms[0];
+
+        if (LevelManager.Instance.currentLevel != null)
+        {
+            currentPlatform = LevelManager.Instance.currentLevel.platforms[0];
+        }
+        gameObject.SetActive(true);
+
         ClearBrick();
+
+        ChangeAnim("Idle");
+
+        Invoke(nameof(ChangeIdleState), 0.000001f);
+    }
+
+    private void ChangeIdleState(){
+        ChangeState(new IdleState());
     }
 
     private void Start()
@@ -55,8 +76,11 @@ public class BotCtl : CharacterCtl
     }
     public void Move(Vector3 pos)
     {
-        agent.SetDestination(pos);
-        ChangeAnim("Running");
+        if (isMove)
+        {
+            agent.SetDestination(pos);
+            ChangeAnim("Running");
+        }
     }
 
     public void CheckStair()
@@ -100,7 +124,7 @@ public class BotCtl : CharacterCtl
         DoorFinish doorFinish = Cache.GetDoorFinishs(collision.collider);
         if (doorFinish != null)
         {
-            doorFinish.DeactiveDoor();
+            doorFinish.DeactiveDoor(this.eColor);
         }
     }
 
@@ -137,5 +161,15 @@ public class BotCtl : CharacterCtl
             }
             
         }
+    }
+
+    public void IsActiveAgent(bool isActive)
+    {
+        agent.enabled = isActive;
+    }
+
+    public void SetMove(bool isMove)
+    {
+        this.isMove = isMove;
     }
 }

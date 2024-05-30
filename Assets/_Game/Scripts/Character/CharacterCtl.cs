@@ -31,7 +31,7 @@ public class CharacterCtl : GameUnit
         sMeshRenderer.material = LevelManager.Instance.dataColor.GetColor(eColor);
     }
 
-    protected void ChangeAnim(string animName)
+    public void ChangeAnim(string animName)
     {
         if (currentAnimName != animName)
         {
@@ -58,7 +58,7 @@ public class CharacterCtl : GameUnit
         SimplePool.Despawn(stackBricks.Pop());
         currentPosBrick.y -= .3f;
     }
-    protected void ClearBrick()
+    public void ClearBrick()
     {
         if (stackBricks.Count == 0) return;
 

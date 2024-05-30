@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : IState<BotCtl>
+public class WinnerState : IState<BotCtl>
 {
     public void OnEnter(BotCtl t)
     {
-        t.ChangeAnim("Idle");
+        t.SetMove(false);
+        t.IsActiveAgent(false);
     }
 
     public void OnExecute(BotCtl t)
     {
-        t.FindBrick();
-        t.ChangeState(new CollectState());
+        t.ChangeAnim("Dance");
     }
 
     public void OnExit(BotCtl t)

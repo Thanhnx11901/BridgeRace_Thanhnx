@@ -25,9 +25,13 @@ public class PlayerCtl : CharacterCtl
 
     public void OnInit()
     {
+        //ChangeAnim("Idle");
+
         isMoving = true;
         speed = 10f;
         ClearBrick();
+        gameObject.SetActive(true);
+
     }
 
     protected void Start()
@@ -134,24 +138,41 @@ public class PlayerCtl : CharacterCtl
         {
             if (vertical > 0)
             {
-                doorFinish.DeactiveDoor();
+                doorFinish.DeactiveDoor(this.eColor);
             }
         }
+
+        // trạng thái người chơi chiến thắng
         if (hit.collider.CompareTag("Finish"))
         {
             Finish finish = hit.collider.GetComponent<Finish>();
             if(finish != null)
             {
-                finish.finishColonms[0].SetColor(eColor);
-                transform.position = finish.finishColonms[0].GetPoint();
+                LevelManager.Instance.DeativeMove();
+
+                //Set color cột chiến thắng
+                SetPosPlayerBot(finish);
+
                 isMoving = false;
-                transform.rotation = Quaternion.Euler(0, 180f, 0);
+
                 ChangeAnim("Victory");
+
                 ClearBrick();
+
+                GameManager.ChangeState(GameState.Win);
+
+                Invoke(nameof(ShowWin), 2f);
 
             }
         }
     }
+
+    private void ShowWin()
+    {
+        UIManager.Ins.OpenUI<Win>();
+
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -160,6 +181,29 @@ public class PlayerCtl : CharacterCtl
         {
             brick.DeactiveBrick();
             AddBrick();
+        }
+    }
+
+    private void SetPosPlayerBot(Finish finish)
+    {
+        Debug.Log("finish");
+
+
+        finish.finishColonms[0].SetColor(eColor);
+
+        TF.position = finish.finishColonms[0].GetPoint();
+        TF.rotation = Quaternion.Euler(0, 180f, 0);
+
+        List<BotCtl> botCtls = LevelManager.Instance.botCtls;
+
+        for (int i = 0; i < 2; i++)
+        {
+            finish.finishColonms[i+1].SetColor(botCtls[i].eColor);
+
+            botCtls[i].TF.position = finish.finishColonms[i+1].GetPoint();
+            botCtls[i].TF.rotation = Quaternion.Euler(0, 180f, 0);
+            botCtls[i].ClearBrick();
+
         }
     }
 }
