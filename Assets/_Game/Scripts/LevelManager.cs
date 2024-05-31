@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     public List<EColor> colors = new List<EColor>();
     public List<Level> levels = new List<Level>();
     public Level currentLevel;
+    public int indexCurrentLevel;
 
     public List<BotCtl> botCtls = new List<BotCtl>();
 
@@ -36,54 +37,52 @@ public class LevelManager : MonoBehaviour
         // random màu sắc cho player và sinh bot
         playerCtl.SetColor(colors[0]);
         playerCtl.gameObject.SetActive(false);
-        //sinh bot
-        SpawnBot(colors);
+        //sinh ra 3 bot 
+        SpawnBot(colors,3);
 
-        //load level
-        //LoadLevel(0);
-
-        
+        indexCurrentLevel = PlayerPrefs.GetInt("Current_Level");
     }
 
     //load level
-    public void LoadLevel(int indexLevel)
+    public void LoadLevel()
     {
         if (currentLevel != null) Destroy(currentLevel.gameObject);
 
-        currentLevel = Instantiate(levels[indexLevel], transform);
+        currentLevel = Instantiate(levels[indexCurrentLevel], transform);
 
+        currentLevel.ShuffleListStartPoint();
 
+        ChangeStateWinnerState();
         //set vị trí cho player và bot
-        playerCtl.TF.position = currentLevel.GetRandomStartPoint().position;
-        playerCtl.OnInit();
+        setPlayerAndBot();
 
-        for (int i = 0; i < botCtls.Count; i++)
-        {
-            botCtls[i].TF.position = currentLevel.GetRandomStartPoint().position;
-            botCtls[i].OnInit();
-        }
     }
 
     public void NextLevel()
     {
         if (currentLevel != null) Destroy(currentLevel.gameObject);
 
-        currentLevel = Instantiate(levels[1], transform);
+        indexCurrentLevel++;
+
+        PlayerPrefs.SetInt("Current_Level", indexCurrentLevel);
+
+        currentLevel = Instantiate(levels[indexCurrentLevel], transform);
+
+        currentLevel.ShuffleListStartPoint();
+
+        ChangeStateWinnerState();
 
         //set vị trí cho player và bot
-        for (int i = 0; i < botCtls.Count; i++)
-        {
-            botCtls[i].TF.position = currentLevel.GetRandomStartPoint().position;
-            botCtls[i].OnInit();
-        }
-        Invoke(nameof(SetPos), 0.00000001f);
+        setPlayerAndBot();
+
+
 
     }
 
     //sinh bot
-    public void SpawnBot(List<EColor> eColors)
+    public void SpawnBot(List<EColor> eColors, int quantityBot)
     {
-        for (int i = 1; i < 4; i++)
+        for (int i = 1; i <= quantityBot; i++)
         {
             BotCtl botCtl = SimplePool.Spawn<BotCtl>(PoolType.Bot, transform);
             botCtl.gameObject.SetActive(false);
@@ -93,20 +92,39 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void setPlayerAndBot()
+    {
+        //Invoke(nameof(SetPosBot), 0);
+        //Invoke(nameof(SetPosPlayer), 0);
+        playerCtl.OnInit();
+        playerCtl.TF.position = currentLevel.StartPoint[0].position;
+        for (int i = 1; i < currentLevel.StartPoint.Count; i++)
+        {
+            botCtls[i-1].TF.position = currentLevel.StartPoint[i].position;
+            botCtls[i-1].OnInit();
+        }
+    }
+
     //Tắt di chuyển của bot
-    public void DeativeMove()
+    public void ChangeStateWinnerState()
     {
         for (int i = 0; i < botCtls.Count; i++)
         {
-            //botCtls[i].SetMove(false);
-            //botCtls[i].IsActiveAgent(false);
             botCtls[i].ChangeState(new WinnerState());
         }
     }
 
-    private void SetPos()
-    {
-        playerCtl.TF.position = currentLevel.GetRandomStartPoint().position;
-        playerCtl.OnInit();
-    }
+    //private void SetPosPlayer()
+    //{
+    //    playerCtl.TF.position = currentLevel.GetRandomStartPoint().position;
+    //    playerCtl.OnInit();
+    //}
+    //private void SetPosBot()
+    //{
+    //    for (int i = 0; i < botCtls.Count; i++)
+    //    {
+    //        botCtls[i].TF.position = currentLevel.GetRandomStartPoint().position;
+    //        botCtls[i].OnInit();
+    //    }
+    //}
 }

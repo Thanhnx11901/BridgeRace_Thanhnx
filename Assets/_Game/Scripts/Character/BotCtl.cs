@@ -21,23 +21,21 @@ public class BotCtl : CharacterCtl
 
     public void OnInit()
     {
+        TF.rotation = Quaternion.Euler(0, 0, 0);
         isMove = true;
-
         agent.enabled = true;
-
         agent.velocity = agent.velocity.normalized;
 
         if (LevelManager.Instance.currentLevel != null)
         {
             currentPlatform = LevelManager.Instance.currentLevel.platforms[0];
         }
-        gameObject.SetActive(true);
 
+        gameObject.SetActive(true);
         ClearBrick();
 
         ChangeAnim("Idle");
-
-        Invoke(nameof(ChangeIdleState), 0.000001f);
+        Invoke(nameof(ChangeIdleState), 0f);
     }
 
     private void ChangeIdleState(){
@@ -55,9 +53,6 @@ public class BotCtl : CharacterCtl
         {
             currentState.OnExecute(this);
         }
-        //Debug.Log(this.name);
-        //Debug.Log(Agent.velocity.normalized);
-
     }
 
     public void ChangeState(IState<BotCtl> state)
@@ -118,16 +113,26 @@ public class BotCtl : CharacterCtl
         {
             door.DeactiveDoor(this.eColor);
             currentPlatform = door.platform;
-            Debug.Log("Door");
         }
 
         DoorFinish doorFinish = Cache.GetDoorFinishs(collision.collider);
         if (doorFinish != null)
         {
             doorFinish.DeactiveDoor(this.eColor);
+
+            Time.timeScale = 0;
+
+            GameManager.ChangeState(GameState.Lose);
+
+            ShowUILose();
         }
     }
 
+    private void ShowUILose()
+    {
+        UIManager.Ins.OpenUI<Lose>();
+        UIManager.Ins.CloseUI<GamePlay>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {

@@ -6,13 +6,16 @@ public class MianMenu : UICanvas
 {
     public void PlayButton()
     {
-        //đổi trạng thái của game
-        GameManager.ChangeState(GameState.Playing);
-
         //load level
-        LevelManager.Instance.LoadLevel(0);
 
-        UIManager.Ins.OpenUI<GamePlay>();
-        Close(0);
+        UIManager.Ins.ShowUILoading(() =>
+        {
+            GameManager.ChangeState(GameState.Playing);
+            LevelManager.Instance.LoadLevel();
+
+            UIManager.Ins.CloseAll();
+            UIManager.Ins.OpenUI<GamePlay>();
+
+        });
     }
 }

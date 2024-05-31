@@ -842,6 +842,7 @@ MonoBehaviour:
   - {fileID: 7666642864214767687, guid: f070a23a996cd406d8f002252750d0ac, type: 3}
   - {fileID: 7484439671830000716, guid: 9ccd83a902920417784ff17c3acb23ab, type: 3}
   currentLevel: {fileID: 0}
+  indexCurrentLevel: 0
   botCtls: []
 --- !u!4 &1700426040
 Transform:

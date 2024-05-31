@@ -5,21 +5,32 @@ using UnityEngine.UI;
 
 public class Win : UICanvas
 {
-    public Text score;
 
-    public void MainMenuButton()
+    public void RetryButton()
     {
-        UIManager.Ins.OpenUI<MianMenu>();
-        Close(0);
+        UIManager.Ins.ShowUILoading(() =>
+        {
+
+            LevelManager.Instance.LoadLevel();
+            GameManager.ChangeState(GameState.Playing);
+            UIManager.Ins.CloseAll();
+            UIManager.Ins.OpenUI<GamePlay>();
+
+        });
     }
 
     public void NextLevelButton()
     {
-        LevelManager.Instance.NextLevel();
+        UIManager.Ins.ShowUILoading(() =>
+        {
 
-        GameManager.ChangeState(GameState.Playing);
+            LevelManager.Instance.NextLevel();
 
-        UIManager.Ins.OpenUI<GamePlay>();
-        Close(0);
+            GameManager.ChangeState(GameState.Playing);
+
+            UIManager.Ins.CloseAll();
+            UIManager.Ins.OpenUI<GamePlay>();
+
+        });
     }
 }

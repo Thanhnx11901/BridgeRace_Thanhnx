@@ -64,4 +64,16 @@ public class Cache
 
         return doorFinishs[collider];
     }
+
+    private static Dictionary<Collider, Finish> finish = new Dictionary<Collider, Finish>();
+
+    public static Finish GetFinish(Collider collider)
+    {
+        if (!finish.ContainsKey(collider))
+        {
+            finish.Add(collider, collider.GetComponent<Finish>());
+        }
+
+        return finish[collider];
+    }
 }

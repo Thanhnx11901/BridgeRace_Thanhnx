@@ -14,8 +14,10 @@
 ///             Close delay time
 ///
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Boxophobic.Constants;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -195,4 +197,18 @@ public class UIManager : Singleton<UIManager>
     }
 
     #endregion
+
+
+    public void ShowUILoading(Action onComplete)
+    {
+        CloseAll();
+        OpenUI<Loading>();
+        StartCoroutine(LoadingCoroutine(onComplete));
+    }
+
+    IEnumerator LoadingCoroutine(Action onComplete)
+    {
+        yield return new WaitForSeconds(2f);
+        onComplete?.Invoke();
+    }
 }

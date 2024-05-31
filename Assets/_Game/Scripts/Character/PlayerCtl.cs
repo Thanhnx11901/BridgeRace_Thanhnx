@@ -25,8 +25,7 @@ public class PlayerCtl : CharacterCtl
 
     public void OnInit()
     {
-        //ChangeAnim("Idle");
-
+        TF.rotation = Quaternion.Euler(0, 0, 0);
         isMoving = true;
         speed = 10f;
         ClearBrick();
@@ -52,8 +51,13 @@ public class PlayerCtl : CharacterCtl
             if (controller.isGrounded)
             {
                 // Lấy đầu vào từ joystick hoặc bàn phím
-                horizontal = joystick.Horizontal;
-                vertical = joystick.Vertical;
+                //horizontal = joystick.Horizontal;
+                //vertical = joystick.Vertical;
+                
+                horizontal = Input.GetAxis("Horizontal");
+                vertical = Input.GetAxis("Vertical");
+
+
 
                 // Di chuyển trên mặt đất
                 moveDirection = new Vector3(horizontal * speed, 0, vertical * speed);
@@ -142,35 +146,22 @@ public class PlayerCtl : CharacterCtl
             }
         }
 
-        // trạng thái người chơi chiến thắng
-        if (hit.collider.CompareTag("Finish"))
+        Finish finish = Cache.GetFinish(hit.collider);
+
+        if (finish != null)
         {
-            Finish finish = hit.collider.GetComponent<Finish>();
-            if(finish != null)
-            {
-                LevelManager.Instance.DeativeMove();
+            //Set player và bot 
+            SetPlayerAndBotsOnWin(finish);
 
-                //Set color cột chiến thắng
-                SetPosPlayerBot(finish);
-
-                isMoving = false;
-
-                ChangeAnim("Victory");
-
-                ClearBrick();
-
-                GameManager.ChangeState(GameState.Win);
-
-                Invoke(nameof(ShowWin), 2f);
-
-            }
+            //Show Ui Win
+            Invoke(nameof(ShowUIWin), 2f);
         }
     }
 
-    private void ShowWin()
+    private void ShowUIWin()
     {
         UIManager.Ins.OpenUI<Win>();
-
+        UIManager.Ins.CloseUI<GamePlay>();
     }
 
 
@@ -184,22 +175,26 @@ public class PlayerCtl : CharacterCtl
         }
     }
 
-    private void SetPosPlayerBot(Finish finish)
+    private void SetPlayerAndBotsOnWin(Finish finish)
     {
-        Debug.Log("finish");
 
+        //Set Player
+        isMoving = false;
+        ChangeAnim("Victory");
+        GameManager.ChangeState(GameState.Win);
 
         finish.finishColonms[0].SetColor(eColor);
-
         TF.position = finish.finishColonms[0].GetPoint();
         TF.rotation = Quaternion.Euler(0, 180f, 0);
+        ClearBrick();
 
+
+        //Set Bot
+        LevelManager.Instance.ChangeStateWinnerState();
         List<BotCtl> botCtls = LevelManager.Instance.botCtls;
-
         for (int i = 0; i < 2; i++)
         {
             finish.finishColonms[i+1].SetColor(botCtls[i].eColor);
-
             botCtls[i].TF.position = finish.finishColonms[i+1].GetPoint();
             botCtls[i].TF.rotation = Quaternion.Euler(0, 180f, 0);
             botCtls[i].ClearBrick();

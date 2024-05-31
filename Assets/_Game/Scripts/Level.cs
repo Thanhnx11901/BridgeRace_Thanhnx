@@ -10,9 +10,6 @@ public class Level : MonoBehaviour
 
     public List<Transform> StartPoint;
 
-    public List<Transform> pointNavMeshs;
-
-
     private void Start()
     {
         SpawnBrickPlatform();
@@ -28,17 +25,20 @@ public class Level : MonoBehaviour
         }
     }
 
-    //lấy ra vị trí bắt đầu ngẫu nhiên
-    public Transform GetRandomStartPoint()
+    public void ShuffleListStartPoint()
     {
+        ShuffleList(StartPoint);
+    }
 
-        // Lấy vị trí ngẫu nhiên từ danh sách
-        int randomIndex = Random.Range(0, StartPoint.Count);
-        Transform randomPoint = StartPoint[randomIndex];
-
-        // Loại bỏ phần tử đã lấy ra khỏi danh sách
-        StartPoint.RemoveAt(randomIndex);
-
-        return randomPoint;
+    public void ShuffleList<T>(List<T> list)
+    {
+        int n = list.Count;
+        for (int i = n - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            T temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+        }
     }
 }
