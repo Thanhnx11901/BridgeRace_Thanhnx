@@ -6,7 +6,7 @@ using static UnityEditor.FilePathAttribute;
 
 public class PlayerCtl : CharacterCtl
 {
-    [SerializeField] private FixedJoystick joystick;
+    [SerializeField] private VariableJoystick joystick;
 
     [SerializeField] private Transform posRaycastCheckStair;
 
@@ -51,11 +51,11 @@ public class PlayerCtl : CharacterCtl
             if (controller.isGrounded)
             {
                 // Lấy đầu vào từ joystick hoặc bàn phím
-                //horizontal = joystick.Horizontal;
-                //vertical = joystick.Vertical;
-                
-                horizontal = Input.GetAxis("Horizontal");
-                vertical = Input.GetAxis("Vertical");
+                horizontal = joystick.Horizontal;
+                vertical = joystick.Vertical;
+
+                //horizontal = Input.GetAxis("Horizontal");
+                //vertical = Input.GetAxis("Vertical");
 
 
 
