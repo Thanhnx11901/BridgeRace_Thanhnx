@@ -248,7 +248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3719801863268346302, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4214210862293540874, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
       propertyPath: m_Name
@@ -304,7 +304,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6477832928994964753, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8041404462419484904, guid: 0af1a93fa9a5043bb96880f973507658, type: 3}
       propertyPath: m_LocalScale.z
