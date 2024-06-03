@@ -335,7 +335,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2975191188590109545}
         m_TargetAssemblyTypeName: Win, Assembly-CSharp
-        m_MethodName: MainMenuButton
+        m_MethodName: RetryButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

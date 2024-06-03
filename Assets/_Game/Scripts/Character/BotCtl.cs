@@ -12,6 +12,7 @@ public class BotCtl : CharacterCtl
     [SerializeField] private Transform posRaycastCheckStair;
 
     public NavMeshAgent agent;
+
     public Platform currentPlatform;
     public Brick targetBrick;
 

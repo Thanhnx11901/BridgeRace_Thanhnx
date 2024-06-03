@@ -17,7 +17,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Boxophobic.Constants;
+//using Boxophobic.Constants;
 using UnityEngine;
 using UnityEngine.Events;
 
