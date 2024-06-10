@@ -12,11 +12,11 @@ public class PlayerCtl : CharacterCtl
 
     [SerializeField] private CharacterController controller;
 
-    private Vector3 moveDirection;
-
     [SerializeField] private float speed;
     [SerializeField] private float gravity;
     [SerializeField] private float rotationSpeed;
+
+    private Vector3 moveDirection;
 
     private bool isMoving;
 
@@ -27,7 +27,7 @@ public class PlayerCtl : CharacterCtl
     {
         TF.rotation = Quaternion.Euler(0, 0, 0);
         isMoving = true;
-        speed = 10f;
+        speed = Constants.PLAYER_SPEED;
         ClearBrick();
         gameObject.SetActive(true);
 
@@ -65,19 +65,19 @@ public class PlayerCtl : CharacterCtl
                 // Xoay nhân vật dựa trên đầu vào từ joystick
                 if (horizontal != 0 || vertical != 0)
                 {
-                    ChangeAnim("Running");
+                    ChangeAnim(Constants.ANIM_RUN);
                     Vector3 direction = new Vector3(horizontal, 0, vertical);
                     Quaternion rotation = Quaternion.LookRotation(direction);
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
                 }
                 else
                 {
-                    ChangeAnim("Idle");
+                    ChangeAnim(Constants.ANIM_IDLE);
                 }
 
                 if (vertical < 0)
                 {
-                    speed = 10f;
+                    speed = Constants.PLAYER_SPEED;
                 }
             }
 
@@ -180,7 +180,7 @@ public class PlayerCtl : CharacterCtl
 
         //Set Player
         isMoving = false;
-        ChangeAnim("Victory");
+        ChangeAnim(Constants.ANIM_VICTORY);
         GameManager.ChangeState(GameState.Win);
 
         finish.finishColonms[0].SetColor(eColor);

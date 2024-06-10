@@ -6,7 +6,7 @@ public class IdleState : IState<BotCtl>
 {
     public void OnEnter(BotCtl t)
     {
-        t.ChangeAnim("Idle");
+        t.ChangeAnim(Constants.ANIM_IDLE);
     }
 
     public void OnExecute(BotCtl t)

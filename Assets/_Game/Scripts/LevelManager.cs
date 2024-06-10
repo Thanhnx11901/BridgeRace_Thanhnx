@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
 
         ChangeStateWinnerState();
         //set vị trí cho player và bot
-        setPlayerAndBot();
+        SetPlayerAndBot();
 
     }
 
@@ -73,10 +73,7 @@ public class LevelManager : MonoBehaviour
         ChangeStateWinnerState();
 
         //set vị trí cho player và bot
-        setPlayerAndBot();
-
-
-
+        SetPlayerAndBot();
     }
 
     //sinh bot
@@ -92,10 +89,8 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void setPlayerAndBot()
+    public void SetPlayerAndBot()
     {
-        //Invoke(nameof(SetPosBot), 0);
-        //Invoke(nameof(SetPosPlayer), 0);
         playerCtl.OnInit();
         playerCtl.TF.position = currentLevel.StartPoint[0].position;
         for (int i = 1; i < currentLevel.StartPoint.Count; i++)
@@ -113,18 +108,4 @@ public class LevelManager : MonoBehaviour
             botCtls[i].ChangeState(new WinnerState());
         }
     }
-
-    //private void SetPosPlayer()
-    //{
-    //    playerCtl.TF.position = currentLevel.GetRandomStartPoint().position;
-    //    playerCtl.OnInit();
-    //}
-    //private void SetPosBot()
-    //{
-    //    for (int i = 0; i < botCtls.Count; i++)
-    //    {
-    //        botCtls[i].TF.position = currentLevel.GetRandomStartPoint().position;
-    //        botCtls[i].OnInit();
-    //    }
-    //}
 }

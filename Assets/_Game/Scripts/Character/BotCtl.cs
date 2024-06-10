@@ -1,17 +1,13 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.SocialPlatforms;
 
 
 public class BotCtl : CharacterCtl
 {
     [SerializeField] private Transform posRaycastCheckStair;
 
-    public NavMeshAgent agent;
+    [SerializeField] private NavMeshAgent agent;
 
     public Platform currentPlatform;
     public Brick targetBrick;
@@ -20,12 +16,14 @@ public class BotCtl : CharacterCtl
 
     protected IState<BotCtl> currentState;
 
+    public NavMeshAgent Agent { get => agent; set => agent = value; }
+
     public void OnInit()
     {
         TF.rotation = Quaternion.Euler(0, 0, 0);
         isMove = true;
-        agent.enabled = true;
-        agent.velocity = agent.velocity.normalized;
+        Agent.enabled = true;
+        Agent.velocity = Agent.velocity.normalized;
 
         if (LevelManager.Instance.currentLevel != null)
         {
@@ -35,7 +33,7 @@ public class BotCtl : CharacterCtl
         gameObject.SetActive(true);
         ClearBrick();
 
-        ChangeAnim("Idle");
+        ChangeAnim(Constants.ANIM_IDLE);
         Invoke(nameof(ChangeIdleState), 0f);
     }
 
@@ -74,8 +72,8 @@ public class BotCtl : CharacterCtl
     {
         if (isMove)
         {
-            agent.SetDestination(pos);
-            ChangeAnim("Running");
+            Agent.SetDestination(pos);
+            ChangeAnim(Constants.ANIM_RUN);
         }
     }
 
@@ -148,7 +146,7 @@ public class BotCtl : CharacterCtl
 
     public void FindBrick()
     {
-        agent.velocity = agent.velocity.normalized;
+        Agent.velocity = Agent.velocity.normalized;
 
         List<Brick> bricks = currentPlatform.GetBricksByColor(eColor);
 
@@ -156,7 +154,7 @@ public class BotCtl : CharacterCtl
 
         for (int i = 0; i < bricks.Count; i++)
         {
-            if (bricks[i].isActiveBrick() == true)
+            if (bricks[i].IsActiveBrick() == true)
             {
                 float distance = Vector3.Distance(transform.position, bricks[i].transform.position);
                 if (distance < minDistance)
@@ -171,7 +169,7 @@ public class BotCtl : CharacterCtl
 
     public void IsActiveAgent(bool isActive)
     {
-        agent.enabled = isActive;
+        Agent.enabled = isActive;
     }
 
     public void SetMove(bool isMove)

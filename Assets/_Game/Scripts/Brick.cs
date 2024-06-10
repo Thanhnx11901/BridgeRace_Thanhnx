@@ -17,7 +17,7 @@ public class Brick : GameUnit
         meshRenderer.material = LevelManager.Instance.dataColor.GetColor(eColor);
 
     }
-    public void isActiveBrick(bool isActive)
+    public void IsActiveBrick(bool isActive)
     {
         meshRenderer.enabled = isActive;
         boxCollider.enabled = isActive;
@@ -30,7 +30,7 @@ public class Brick : GameUnit
         StartCoroutine(DisappearAndReappear());
 
     }
-    public bool isActiveBrick()
+    public bool IsActiveBrick()
     {
         if(meshRenderer.enabled == true && boxCollider.enabled == true)
         {

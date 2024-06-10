@@ -20,6 +20,5 @@ public class Stair : MonoBehaviour
         this.eColor = eColor;
         meshRenderer.enabled = true;
         meshRenderer.material = LevelManager.Instance.dataColor.GetColor(eColor);
-        
     }
 }

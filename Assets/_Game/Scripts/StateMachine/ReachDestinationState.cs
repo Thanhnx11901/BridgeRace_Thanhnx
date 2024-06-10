@@ -17,7 +17,7 @@ public class ReachDestinationState : IState<BotCtl>
         t.CheckStair();
         if (t.stackBricks.Count <= 0)
         {
-            t.agent.velocity = Vector3.zero;
+            t.Agent.velocity = Vector3.zero;
 
             t.ChangeState(new IdleState());
         }

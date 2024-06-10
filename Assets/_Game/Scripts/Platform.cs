@@ -22,7 +22,7 @@ public class Platform: MonoBehaviour
                 Brick brickSpawn = SimplePool.Spawn<Brick>(PoolType.Brick, transform);
                 // Gán màu sắc từ danh sách đã phân phối và xáo trộn
                 brickSpawn.SetColor(distributedColors[colorIndex++]);
-                brickSpawn.isActiveBrick(isAcitve);
+                brickSpawn.IsActiveBrick(isAcitve);
                 brickSpawn.TF.position = new Vector3(PointSpawnBrick.position.x + x, PointSpawnBrick.position.y, PointSpawnBrick.position.z + z);
                 brickSpawn.TF.localScale = new Vector3(.3f, .3f, .6f);
 
@@ -36,7 +36,7 @@ public class Platform: MonoBehaviour
         {
             if (bricks[i].EColor == eColor)
             {
-                bricks[i].isActiveBrick(true);
+                bricks[i].IsActiveBrick(true);
             }
         }
     }

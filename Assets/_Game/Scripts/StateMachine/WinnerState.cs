@@ -12,7 +12,7 @@ public class WinnerState : IState<BotCtl>
 
     public void OnExecute(BotCtl t)
     {
-        t.ChangeAnim("Dance");
+        t.ChangeAnim(Constants.ANIM_DANCE);
     }
 
     public void OnExit(BotCtl t)
