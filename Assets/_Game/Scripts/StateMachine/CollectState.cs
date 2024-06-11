@@ -4,24 +4,22 @@ using UnityEngine;
 
 public class CollectState : IState<BotCtl>
 {
-    float timer;
-    float randomTime;
-
     public void OnEnter(BotCtl t)
     {
-        timer = 0;
-        randomTime = Random.Range(5f, 10f);
+        t.Move(t.targetBrick.TF.position);
     }
 
     public void OnExecute(BotCtl t)
     {
-        t.Move(t.targetBrick.TF.position);
-
-        if(timer > randomTime)
+        if (t.IsEnoughBricks())
         {
-            t.ChangeState(new ReachDestinationState());
+            t.ChangeState(t.ReachDestinationState);
         }
-        timer += Time.deltaTime; 
+        else
+        {
+            t.ChangeState(t.CollectState);
+        }
+
     }
 
     public void OnExit(BotCtl t)

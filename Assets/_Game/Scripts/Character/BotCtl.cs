@@ -9,14 +9,32 @@ public class BotCtl : CharacterCtl
 
     [SerializeField] private NavMeshAgent agent;
 
+    private int randomCountFindBrick;
+
     public Platform currentPlatform;
+
     public Brick targetBrick;
 
     private bool isMove;
 
     protected IState<BotCtl> currentState;
 
-    public NavMeshAgent Agent { get => agent; set => agent = value; }
+    private IdleState idleState;
+    private CollectState collectState;
+
+    private ReachDestinationState reachDestinationState;
+
+    private WinnerState winnerState;
+
+
+
+    public NavMeshAgent Agent { get => agent; }
+
+    public IdleState IdleState { get => idleState;}
+    public CollectState CollectState { get => collectState;}
+    public ReachDestinationState ReachDestinationState { get => reachDestinationState;}
+    public WinnerState WinnerState { get => winnerState;}
+    public int RandomCountFindBrick { get => randomCountFindBrick; set => randomCountFindBrick = value; }
 
     public void OnInit()
     {
@@ -31,20 +49,23 @@ public class BotCtl : CharacterCtl
         }
 
         gameObject.SetActive(true);
+
         ClearBrick();
 
         ChangeAnim(Constants.ANIM_IDLE);
         Invoke(nameof(ChangeIdleState), 0f);
     }
-
-    private void ChangeIdleState(){
-        ChangeState(new IdleState());
+    private void ChangeIdleState()
+    {
+        ChangeState(idleState);
     }
-
     private void Start()
     {
+        idleState = new IdleState();
+        collectState = new CollectState();
+        reachDestinationState = new ReachDestinationState();
+        winnerState = new WinnerState();
         OnInit();
-        ChangeState(new IdleState());
     }
     private void Update()
     {
@@ -118,7 +139,12 @@ public class BotCtl : CharacterCtl
         if (doorFinish != null)
         {
             doorFinish.DeactiveDoor(this.eColor);
+        }
 
+        Finish finish = Cache.GetFinish(collision.collider);
+
+        if (finish != null && !GameManager.IsState(GameState.Lose))
+        {
             Time.timeScale = 0;
 
             GameManager.ChangeState(GameState.Lose);
@@ -165,6 +191,11 @@ public class BotCtl : CharacterCtl
             }
             
         }
+    }
+
+    public bool IsEnoughBricks()
+    {
+        return stackBricks.Count > RandomCountFindBrick;
     }
 
     public void IsActiveAgent(bool isActive)

@@ -11,7 +11,6 @@ public class Lose : UICanvas
         Time.timeScale = 1;
         UIManager.Ins.ShowUILoading(() =>
         {
-
             LevelManager.Instance.LoadLevel();
             GameManager.ChangeState(GameState.Playing);
             UIManager.Ins.CloseAll();

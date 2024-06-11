@@ -19,7 +19,7 @@ public class ReachDestinationState : IState<BotCtl>
         {
             t.Agent.velocity = Vector3.zero;
 
-            t.ChangeState(new IdleState());
+            t.ChangeState(t.IdleState);
         }
     }
 
