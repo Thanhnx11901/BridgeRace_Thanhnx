@@ -63,7 +63,7 @@ public class PlayerCtl : CharacterCtl
                 moveDirection = new Vector3(horizontal * speed, 0, vertical * speed);
 
                 // Xoay nhân vật dựa trên đầu vào từ joystick
-                if (horizontal != 0 || vertical != 0)
+                if (Mathf.Abs(horizontal) > 0.0001f || Mathf.Abs(vertical) > 0.0001f)
                 {
                     ChangeAnim(Constants.ANIM_RUN);
                     Vector3 direction = new Vector3(horizontal, 0, vertical);
@@ -87,7 +87,7 @@ public class PlayerCtl : CharacterCtl
             // Di chuyển nhân vật
             controller.Move(moveDirection * Time.deltaTime);
         }
-        
+
     }
 
     private void CheckStair()
@@ -194,8 +194,8 @@ public class PlayerCtl : CharacterCtl
         List<BotCtl> botCtls = LevelManager.Instance.botCtls;
         for (int i = 0; i < 2; i++)
         {
-            finish.finishColonms[i+1].SetColor(botCtls[i].eColor);
-            botCtls[i].TF.position = finish.finishColonms[i+1].GetPoint();
+            finish.finishColonms[i + 1].SetColor(botCtls[i].eColor);
+            botCtls[i].TF.position = finish.finishColonms[i + 1].GetPoint();
             botCtls[i].TF.rotation = Quaternion.Euler(0, 180f, 0);
             botCtls[i].ClearBrick();
 
