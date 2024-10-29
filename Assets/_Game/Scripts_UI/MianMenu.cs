@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MianMenu : UICanvas
 {
+    private void Start() {
+        
+    }
     public void PlayButton()
     {
         //load level

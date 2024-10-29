@@ -6,6 +6,10 @@ using UnityEngine.UI;
 public class Win : UICanvas
 {
 
+    private void Start()
+    {
+
+    }
     public void RetryButton()
     {
         UIManager.Ins.ShowUILoading(() =>

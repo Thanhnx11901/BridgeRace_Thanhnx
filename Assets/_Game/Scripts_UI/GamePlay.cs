@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GamePlay : UICanvas
 {
+    private void Start() {
+        
+    }
     public void SettingButton()
     {
         UIManager.Ins.OpenUI<Setting>();

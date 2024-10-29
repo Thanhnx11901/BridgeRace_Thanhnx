@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class Lose : UICanvas
 {
+    private void Start()
+    {
+
+    }
 
     public void RetryButton()
     {

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Setting : UICanvas
 {
+    private void Start() {
+        
+    }
     public void ContinueButton()
     {
         Time.timeScale = 1;
